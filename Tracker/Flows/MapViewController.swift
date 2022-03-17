@@ -7,20 +7,26 @@
 
 import UIKit
 import GoogleMaps
+import Combine
 
 class MapViewController: UIViewController {
     // MARK: - IBOutlets
     
     @IBOutlet weak var mapView: GMSMapView!
+    @IBOutlet weak var addressLabel: UILabel!
     
     // MARK: - Properties
     
     private let coordinateMoscow = CLLocationCoordinate2D(latitude: 55.753215, longitude: 37.622504)
     private var currentLocation = CLLocationCoordinate2D(latitude: 55.753215, longitude: 37.622504)
     
+    var mapService = GoogleMapService()
+    
     var marker: GMSMarker?
     var manualMarker: GMSMarker?
     var locationManager: CLLocationManager?
+    var geocoder = CLGeocoder()
+    var subscription: AnyCancellable?
     
     // MARK: - Lify cycle
     
@@ -29,6 +35,7 @@ class MapViewController: UIViewController {
         
         configureMap()
         configureLocationManager()
+        subscription = mapService.publisher.sink { [unowned self] in addressLabel.text = $0 }
     }
     
     // MARK: - Logic
@@ -40,7 +47,7 @@ class MapViewController: UIViewController {
     func configureMap() {
         let camera = GMSCameraPosition.camera(withTarget: coordinateMoscow, zoom: 17)
         mapView.camera = camera
-        mapView.delegate = self
+        mapView.delegate = mapService
     }
     
     func configureLocationManager() {
@@ -48,16 +55,6 @@ class MapViewController: UIViewController {
         locationManager?.delegate = self
         locationManager?.startUpdatingLocation()
         locationManager?.requestAlwaysAuthorization()
-    }
-    
-    func addMarker() {
-        let view = UILabel(frame: CGRect(x: 0, y: 0, width: 25, height: 20))
-        view.text = "🙂"
-        
-        let marker = GMSMarker(position: currentLocation)
-        marker.map = mapView
-        marker.iconView = view
-        self.marker = marker
     }
     
     // MARK: - IBActions
@@ -74,30 +71,13 @@ class MapViewController: UIViewController {
     
 }
 
-// MARK: - GMSMapViewDelegate
-extension MapViewController: GMSMapViewDelegate {
-    func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        if let manualMarker = manualMarker {
-            manualMarker.position = coordinate
-        } else {
-            let manualMarker = GMSMarker(position: coordinate)
-            manualMarker.map = mapView
-            self.manualMarker = manualMarker
-        }
-    }
-}
-
 // MARK: - CLLocationManagerDelegate
 extension MapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         currentLocation = location.coordinate
-        if let marker = marker {
-            marker.position = currentLocation
-        } else {
-            addMarker()
-        }
+        mapService.addMarker(to: currentLocation, on: mapView)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
