@@ -10,17 +10,37 @@ import GoogleMaps
 import Combine
 
 protocol MapServiceDelegate {
+    var publisher: PassthroughSubject<String, Never> { get set }
+    
+    func configureMap()
+    func setCurrentLocation(_ location: CLLocationCoordinate2D)
+    func addMarkerkToCurrentLocatin()
+    func setCameraToCurrentLocation()
 }
 
 class GoogleMapService: NSObject, MapServiceDelegate {
-    var marker: GMSMarker?
-    var manualMarker: GMSMarker?
-    var publisherAddress: AnyPublisher<String, Never>?
-    var address: String = ""
-    var publisher = PassthroughSubject<String, Never>()
-    let geocoder = CLGeocoder()
+    private let geocoder = CLGeocoder()
     
-    func addMarker(to location: CLLocationCoordinate2D, on mapView: GMSMapView) {
+    private var mapView: GMSMapView
+    private var marker: GMSMarker?
+    private var manualMarker: GMSMarker?
+    
+    private let coordinateMoscow = CLLocationCoordinate2D(latitude: 55.753215, longitude: 37.622504)
+    private var currentLocation = CLLocationCoordinate2D(latitude: 55.753215, longitude: 37.622504)
+    
+    var publisher = PassthroughSubject<String, Never>()
+    
+    init(mapView: UIView) {
+        self.mapView = mapView as! GMSMapView
+    }
+    
+    func configureMap() {
+        let camera = GMSCameraPosition.camera(withTarget: coordinateMoscow, zoom: 17)
+        mapView.camera = camera
+        mapView.delegate = self
+    }
+    
+    func addMarker(to location: CLLocationCoordinate2D) {
         let view = UILabel(frame: CGRect(x: 0, y: 0, width: 25, height: 20))
         view.text = "🙂"
         
@@ -32,6 +52,22 @@ class GoogleMapService: NSObject, MapServiceDelegate {
             marker.iconView = view
             self.marker = marker
         }
+    }
+    
+    func addMarkerkToCurrentLocatin() {
+        addMarker(to: currentLocation)
+    }
+    
+    func setCamera(to location: CLLocationCoordinate2D) {
+        mapView.animate(to: GMSCameraPosition.camera(withTarget: location, zoom: 17))
+    }
+    
+    func setCameraToCurrentLocation() {
+        mapView.animate(to: GMSCameraPosition.camera(withTarget: currentLocation, zoom: 17))
+    }
+    
+    func setCurrentLocation(_ location: CLLocationCoordinate2D) {
+        currentLocation = location
     }
 }
 
