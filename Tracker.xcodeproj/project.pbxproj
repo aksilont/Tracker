@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A30423927E5FD5100D6D7FD /* MapServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A30423827E5FD5100D6D7FD /* MapServiceDelegate.swift */; };
 		7A4B6F6927E3D07100D8C2CD /* GoogleMapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4B6F6827E3D07100D8C2CD /* GoogleMapService.swift */; };
 		7AA3F90627DE7367001E39BC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA3F90527DE7367001E39BC /* AppDelegate.swift */; };
 		7AA3F90827DE7367001E39BC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA3F90727DE7367001E39BC /* SceneDelegate.swift */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		5739DFA8B8E505924E9FA9F3 /* Pods-Tracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tracker.debug.xcconfig"; path = "Target Support Files/Pods-Tracker/Pods-Tracker.debug.xcconfig"; sourceTree = "<group>"; };
+		7A30423827E5FD5100D6D7FD /* MapServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapServiceDelegate.swift; sourceTree = "<group>"; };
 		7A4B6F6827E3D07100D8C2CD /* GoogleMapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapService.swift; sourceTree = "<group>"; };
 		7AA3F90227DE7367001E39BC /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AA3F90527DE7367001E39BC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				7AE3CD4C27E218F600141D13 /* MapKitKeys.swift */,
+				7A30423827E5FD5100D6D7FD /* MapServiceDelegate.swift */,
 				7A4B6F6827E3D07100D8C2CD /* GoogleMapService.swift */,
 			);
 			path = Core;
@@ -253,6 +256,7 @@
 				7AE3CD4D27E218F600141D13 /* MapKitKeys.swift in Sources */,
 				7AA3F90627DE7367001E39BC /* AppDelegate.swift in Sources */,
 				7AA3F90827DE7367001E39BC /* SceneDelegate.swift in Sources */,
+				7A30423927E5FD5100D6D7FD /* MapServiceDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

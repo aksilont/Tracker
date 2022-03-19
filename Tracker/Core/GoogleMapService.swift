@@ -9,15 +9,6 @@ import Foundation
 import GoogleMaps
 import Combine
 
-protocol MapServiceDelegate {
-    var publisher: PassthroughSubject<String, Never> { get set }
-    
-    func configureMap()
-    func setCurrentLocation(_ location: CLLocationCoordinate2D)
-    func addMarkerkToCurrentLocatin()
-    func setCameraToCurrentLocation()
-}
-
 class GoogleMapService: NSObject, MapServiceDelegate {
     private let geocoder = CLGeocoder()
     
