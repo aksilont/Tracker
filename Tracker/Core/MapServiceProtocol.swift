@@ -1,19 +1,26 @@
 //
-//  MapServiceDelegate.swift
+//  MapServiceProtocol.swift
 //  Tracker
 //
 //  Created by Aksilont on 19.03.2022.
 //
 
-import Foundation
+import UIKit
 import CoreLocation
 import Combine
 
-protocol MapServiceDelegate {
+protocol MapServiceProtocol {
+    var contentView: UIView { get set }
     var publisher: PassthroughSubject<String, Never> { get set }
+    
+    init(contentView: UIView)
     
     func configureMap()
     func setCurrentLocation(_ location: CLLocationCoordinate2D)
+    
+    func addMarker(to location: CLLocationCoordinate2D)
     func addMarkerkToCurrentLocatin()
+    
+    func setCamera(to location: CLLocationCoordinate2D)
     func setCameraToCurrentLocation()
 }

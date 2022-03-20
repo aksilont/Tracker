@@ -5,30 +5,31 @@
 //  Created by Aksilont on 17.03.2022.
 //
 
-import Foundation
 import GoogleMaps
 import Combine
 
-class GoogleMapService: NSObject, MapServiceDelegate {
+class GoogleMapService: NSObject, MapServiceProtocol {
     private let geocoder = CLGeocoder()
-    
-    private var mapView: GMSMapView
     private var marker: GMSMarker?
     private var manualMarker: GMSMarker?
     
     private let coordinateMoscow = CLLocationCoordinate2D(latitude: 55.753215, longitude: 37.622504)
     private var currentLocation = CLLocationCoordinate2D(latitude: 55.753215, longitude: 37.622504)
     
+    var contentView: UIView
+    var mapView = GMSMapView()
     var publisher = PassthroughSubject<String, Never>()
     
-    init(mapView: UIView) {
-        self.mapView = mapView as! GMSMapView
+    required init(contentView: UIView) {
+        self.contentView = contentView
     }
     
     func configureMap() {
         let camera = GMSCameraPosition.camera(withTarget: coordinateMoscow, zoom: 17)
         mapView.camera = camera
         mapView.delegate = self
+        mapView.frame = contentView.frame
+        contentView.addSubview(mapView)
     }
     
     func addMarker(to location: CLLocationCoordinate2D) {

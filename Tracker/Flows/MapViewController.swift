@@ -11,13 +11,11 @@ import Combine
 
 class MapViewController: UIViewController {
     // MARK: - IBOutlets
-    
-    @IBOutlet weak var mapView: UIView!
+    @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var addressLabel: UILabel!
     
     // MARK: - Properties
-    
-    var mapService: MapServiceDelegate!
+    var mapService: MapServiceProtocol!
     var locationManager: CLLocationManager!
     
     var subscription: AnyCancellable?
@@ -34,7 +32,7 @@ class MapViewController: UIViewController {
     // MARK: - Services
     
     func configureGoogleMapService() {
-        mapService = GoogleMapService(mapView: mapView)
+        mapService = GoogleMapService(contentView: contentView)
         mapService.configureMap()
     }
     
