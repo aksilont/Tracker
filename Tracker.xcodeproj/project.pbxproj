@@ -16,6 +16,8 @@
 		7AA3F90F27DE7367001E39BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7AA3F90E27DE7367001E39BC /* Assets.xcassets */; };
 		7AA3F91227DE7367001E39BC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7AA3F91027DE7367001E39BC /* LaunchScreen.storyboard */; };
 		7AE3CD4D27E218F600141D13 /* MapKitKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE3CD4C27E218F600141D13 /* MapKitKeys.swift */; };
+		7AEAE80327E7BBAB0042491B /* MapServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEAE80227E7BBAB0042491B /* MapServiceType.swift */; };
+		7AEAE80527E7C89B0042491B /* AppleMapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEAE80427E7C89B0042491B /* AppleMapService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		7AA3F91127DE7367001E39BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7AA3F91327DE7367001E39BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7AE3CD4C27E218F600141D13 /* MapKitKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitKeys.swift; sourceTree = "<group>"; };
+		7AEAE80227E7BBAB0042491B /* MapServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapServiceType.swift; sourceTree = "<group>"; };
+		7AEAE80427E7C89B0042491B /* AppleMapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMapService.swift; sourceTree = "<group>"; };
 		887CFEB720A3E3E9FB26E6F2 /* Pods-Tracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tracker.release.xcconfig"; path = "Target Support Files/Pods-Tracker/Pods-Tracker.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,7 +128,9 @@
 			children = (
 				7AE3CD4C27E218F600141D13 /* MapKitKeys.swift */,
 				7A30423827E5FD5100D6D7FD /* MapServiceProtocol.swift */,
+				7AEAE80227E7BBAB0042491B /* MapServiceType.swift */,
 				7A4B6F6827E3D07100D8C2CD /* GoogleMapService.swift */,
+				7AEAE80427E7C89B0042491B /* AppleMapService.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -252,7 +258,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A4B6F6927E3D07100D8C2CD /* GoogleMapService.swift in Sources */,
+				7AEAE80527E7C89B0042491B /* AppleMapService.swift in Sources */,
 				7AA3F90A27DE7367001E39BC /* MapViewController.swift in Sources */,
+				7AEAE80327E7BBAB0042491B /* MapServiceType.swift in Sources */,
 				7AE3CD4D27E218F600141D13 /* MapKitKeys.swift in Sources */,
 				7AA3F90627DE7367001E39BC /* AppDelegate.swift in Sources */,
 				7AA3F90827DE7367001E39BC /* SceneDelegate.swift in Sources */,

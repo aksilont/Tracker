@@ -15,10 +15,11 @@ class MapViewController: UIViewController {
     @IBOutlet weak var addressLabel: UILabel!
     
     // MARK: - Properties
-    var mapService: MapServiceProtocol!
-    var locationManager: CLLocationManager!
+    var mapServiceType: MapServiceType!
+    private var mapService: MapServiceProtocol!
+    private var locationManager: CLLocationManager!
     
-    var subscription: AnyCancellable?
+    private var subscription: AnyCancellable?
     
     // MARK: - Lify cycle
     
@@ -31,20 +32,24 @@ class MapViewController: UIViewController {
     
     // MARK: - Services
     
-    func configureGoogleMapService() {
-        mapService = GoogleMapService(contentView: contentView)
-        mapService.configureMap()
-    }
-    
     func configureMapService() {
-        configureGoogleMapService()
+        switch mapServiceType {
+        case .google:
+            mapService = GoogleMapService(contentView: contentView)
+        case .apple:
+            mapService = AppleMapService(contentView: contentView)
+        case .none:
+            mapService = GoogleMapService(contentView: contentView)
+        }
+        mapService.contentView = contentView
+        mapService.configureMap()
+        
         subscription = mapService.publisher.sink { [unowned self] in addressLabel.text = $0 }
     }
     
     func configureLocationManager() {
         locationManager = CLLocationManager()
         locationManager?.delegate = self
-        locationManager?.startUpdatingLocation()
         locationManager?.requestAlwaysAuthorization()
     }
     
@@ -65,6 +70,13 @@ class MapViewController: UIViewController {
 
 // MARK: - CLLocationManagerDelegate
 extension MapViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager,
+                         didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
+            locationManager.startUpdatingLocation()
+        }
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
