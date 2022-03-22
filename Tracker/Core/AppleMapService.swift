@@ -17,24 +17,31 @@ class AppleMapService: NSObject, MapServiceProtocol {
     
     private let coordinateMoscow = CLLocationCoordinate2D(latitude: 55.753215, longitude: 37.622504)
     private var currentLocation = CLLocationCoordinate2D(latitude: 55.753215, longitude: 37.622504)
+    private var radius = 500.0
     
     var contentView: UIView
     var mapView = MKMapView()
     var publisher = PassthroughSubject<String, Never>()
+    private var radiusPublisher = PassthroughSubject<Double, Never>()
+    private var subscription: Set<AnyCancellable> = []
     
     required init(contentView: UIView) {
         self.contentView = contentView
     }
     
     func configureMap() {
-        let region = MKCoordinateRegion(center: coordinateMoscow, latitudinalMeters: 200, longitudinalMeters: 200)
+        let region = MKCoordinateRegion(center: coordinateMoscow, latitudinalMeters: radius, longitudinalMeters: radius)
         mapView.delegate = self
         mapView.frame = contentView.frame
         mapView.setRegion(region, animated: true)
-        contentView.addSubview(mapView)
+        contentView.insertSubview(mapView, at: 0)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnTheMap))
         mapView.addGestureRecognizer(tapGesture)
+        
+        radiusPublisher
+            .sink { [unowned self] _ in setCamera(to: mapView.centerCoordinate) }
+            .store(in: &subscription)
     }
     
     @objc func tapOnTheMap(_ sender: UIGestureRecognizer) {
@@ -60,13 +67,30 @@ class AppleMapService: NSObject, MapServiceProtocol {
     
     func setCamera(to location: CLLocationCoordinate2D) {
         let region = MKCoordinateRegion(center: location,
-                                        latitudinalMeters: 200,
-                                        longitudinalMeters: 200)
+                                        latitudinalMeters: radius,
+                                        longitudinalMeters: radius)
         mapView.setRegion(region, animated: true)
     }
     
     func setCameraToCurrentLocation() {
         setCamera(to: currentLocation)
+    }
+    
+    func zoomIn() {
+        radius /= 2
+        radiusPublisher.send(radius)
+    }
+    
+    func zoomOut() {
+        radius *= 2
+        radiusPublisher.send(radius)
+    }
+    
+    deinit {
+        for item in subscription {
+            item.cancel()
+        }
+        subscription.removeAll()
     }
 }
 

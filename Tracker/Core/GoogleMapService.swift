@@ -61,6 +61,14 @@ class GoogleMapService: NSObject, MapServiceProtocol {
     func setCurrentLocation(_ location: CLLocationCoordinate2D) {
         currentLocation = location
     }
+    
+    func zoomIn() {
+        
+    }
+    
+    func zoomOut() {
+        
+    }
 }
 
 extension GoogleMapService: GMSMapViewDelegate {

@@ -23,4 +23,7 @@ protocol MapServiceProtocol {
     
     func setCamera(to location: CLLocationCoordinate2D)
     func setCameraToCurrentLocation()
+    
+    func zoomIn()
+    func zoomOut()
 }

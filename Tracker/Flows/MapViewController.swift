@@ -55,8 +55,16 @@ class MapViewController: UIViewController {
     
     // MARK: - IBActions
     
-    @IBAction func currentLocationTapped(_ sender: UIBarButtonItem) {
+    @IBAction func currentLocationTapped(_ sender: UIButton) {
         mapService.setCameraToCurrentLocation()
+    }
+    
+    @IBAction func zoomInTapped(_ sender: UIButton) {
+        mapService.zoomIn()
+    }
+    
+    @IBAction func zoomOutTapped(_ sender: UIButton) {
+        mapService.zoomOut()
     }
     
     // MARK: - Deinit
