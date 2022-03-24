@@ -26,4 +26,7 @@ protocol MapServiceProtocol {
     
     func zoomIn()
     func zoomOut()
+    
+    func startRecordRoute()
+    func stopRecordRoute()
 }

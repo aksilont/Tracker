@@ -25,6 +25,9 @@ class AppleMapService: NSObject, MapServiceProtocol {
     private var radiusPublisher = PassthroughSubject<Double, Never>()
     private var subscription: Set<AnyCancellable> = []
     
+    private var route = [CLLocationCoordinate2D]()
+    private var isTracking = false
+    
     required init(contentView: UIView) {
         self.contentView = contentView
     }
@@ -33,6 +36,7 @@ class AppleMapService: NSObject, MapServiceProtocol {
         let region = MKCoordinateRegion(center: coordinateMoscow, latitudinalMeters: radius, longitudinalMeters: radius)
         mapView.delegate = self
         mapView.frame = contentView.frame
+        mapView.showsUserLocation = true
         mapView.setRegion(region, animated: true)
         contentView.insertSubview(mapView, at: 0)
         
@@ -53,6 +57,16 @@ class AppleMapService: NSObject, MapServiceProtocol {
     
     func setCurrentLocation(_ location: CLLocationCoordinate2D) {
         currentLocation = location
+        
+        if isTracking {
+            setCameraToCurrentLocation()
+            route.append(currentLocation)
+            
+            removeAllOverlays()
+            
+            let routePolyLine = MKPolyline(coordinates: route, count: route.count)
+            mapView.addOverlay(routePolyLine)
+        }
     }
     
     func addMarker(to location: CLLocationCoordinate2D) {
@@ -63,13 +77,16 @@ class AppleMapService: NSObject, MapServiceProtocol {
     
     func addMarkerkToCurrentLocatin() {
         addMarker(to: currentLocation)
+        route.append(currentLocation)
     }
     
     func setCamera(to location: CLLocationCoordinate2D) {
-        let region = MKCoordinateRegion(center: location,
-                                        latitudinalMeters: radius,
-                                        longitudinalMeters: radius)
-        mapView.setRegion(region, animated: true)
+        UIView.animate(withDuration: 1) {
+            let region = MKCoordinateRegion(center: location,
+                                            latitudinalMeters: self.radius,
+                                            longitudinalMeters: self.radius)
+            self.mapView.setRegion(region, animated: true)
+        }
     }
     
     func setCameraToCurrentLocation() {
@@ -77,7 +94,7 @@ class AppleMapService: NSObject, MapServiceProtocol {
     }
     
     func zoomIn() {
-        radius /= 2
+        radius = radius / 2 <= 100 ? 100 : radius / 2
         radiusPublisher.send(radius)
     }
     
@@ -85,6 +102,24 @@ class AppleMapService: NSObject, MapServiceProtocol {
         radius *= 2
         radiusPublisher.send(radius)
     }
+    
+    func removeAllOverlays() {
+        mapView.removeOverlays(mapView.overlays)
+    }
+    
+    func startRecordRoute() {
+        route = []
+        removeAllOverlays()
+        isTracking = true
+    }
+    
+    func stopRecordRoute() {
+        isTracking = false
+        route = []
+        removeAllOverlays()
+    }
+    
+    // MARK: - Deinit
     
     deinit {
         for item in subscription {
@@ -103,5 +138,13 @@ extension AppleMapService: MKMapViewDelegate {
         smileLabel.text = "🙂"
         customAnnotationView.addSubview(smileLabel)
         return customAnnotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.strokeColor = UIColor.blue
+        renderer.lineWidth = 4.0
+        
+        return renderer
     }
 }

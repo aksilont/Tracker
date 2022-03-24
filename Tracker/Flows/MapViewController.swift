@@ -49,8 +49,12 @@ class MapViewController: UIViewController {
     
     func configureLocationManager() {
         locationManager = CLLocationManager()
-        locationManager?.delegate = self
-        locationManager?.requestAlwaysAuthorization()
+        locationManager.delegate = self
+        locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.pausesLocationUpdatesAutomatically = false
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startMonitoringSignificantLocationChanges()
+        locationManager.requestAlwaysAuthorization()
     }
     
     // MARK: - IBActions
@@ -67,6 +71,14 @@ class MapViewController: UIViewController {
         mapService.zoomOut()
     }
     
+    
+    @IBAction func startRecordRoute(_ sender: UIButton) {
+        mapService.startRecordRoute()
+    }
+    
+    @IBAction func stopRecordRoute(_ sender: UIButton) {
+        mapService.stopRecordRoute()
+    }
     // MARK: - Deinit
     
     deinit {
@@ -81,15 +93,27 @@ extension MapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager,
                          didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse || status == .authorizedAlways {
+        switch status {
+        case .authorizedWhenInUse, .authorizedAlways:
             locationManager.startUpdatingLocation()
+            break
+        case .denied:
+            // TODO: Сообщить пользователю, что нужно включить службу локации на телефоне
+            break
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted:
+                // TODO: Сообщить пользователю, что у приложения нет доступа к службам локации
+            break
+        @unknown default:
+            break
         }
+        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         mapService.setCurrentLocation(location.coordinate)
-        mapService.addMarkerkToCurrentLocatin()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

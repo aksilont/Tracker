@@ -69,6 +69,14 @@ class GoogleMapService: NSObject, MapServiceProtocol {
     func zoomOut() {
         
     }
+    
+    func startRecordRoute() {
+        
+    }
+    
+    func stopRecordRoute() {
+        
+    }
 }
 
 extension GoogleMapService: GMSMapViewDelegate {
