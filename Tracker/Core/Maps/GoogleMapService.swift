@@ -70,11 +70,7 @@ class GoogleMapService: NSObject, MapServiceProtocol {
         
     }
     
-    func startRecordRoute() {
-        
-    }
-    
-    func stopRecordRoute() {
+    func startStopRecordRoute() {
         
     }
 }

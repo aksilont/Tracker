@@ -7,7 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A05657227EE1E5A0076BD9A /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A05657127EE1E5A0076BD9A /* CoreDataStack.swift */; };
+		7A05657527EE1F0A0076BD9A /* Tracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7A05657327EE1F0A0076BD9A /* Tracker.xcdatamodeld */; };
 		7A30423927E5FD5100D6D7FD /* MapServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A30423827E5FD5100D6D7FD /* MapServiceProtocol.swift */; };
+		7A4799C627EE2329001E4DB4 /* Route+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4799C227EE2329001E4DB4 /* Route+CoreDataClass.swift */; };
+		7A4799C727EE2329001E4DB4 /* Route+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4799C327EE2329001E4DB4 /* Route+CoreDataProperties.swift */; };
+		7A4799C827EE2329001E4DB4 /* Coordinate+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4799C427EE2329001E4DB4 /* Coordinate+CoreDataClass.swift */; };
+		7A4799C927EE2329001E4DB4 /* Coordinate+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4799C527EE2329001E4DB4 /* Coordinate+CoreDataProperties.swift */; };
+		7A4799CE27EF5C56001E4DB4 /* DataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4799CD27EF5C56001E4DB4 /* DataRepository.swift */; };
 		7A4B6F6927E3D07100D8C2CD /* GoogleMapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4B6F6827E3D07100D8C2CD /* GoogleMapService.swift */; };
 		7A82AACA27E9FEDE0015FCFF /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A82AAC927E9FEDE0015FCFF /* RoundButton.swift */; };
 		7AA3F90627DE7367001E39BC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA3F90527DE7367001E39BC /* AppDelegate.swift */; };
@@ -23,7 +30,14 @@
 
 /* Begin PBXFileReference section */
 		5739DFA8B8E505924E9FA9F3 /* Pods-Tracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tracker.debug.xcconfig"; path = "Target Support Files/Pods-Tracker/Pods-Tracker.debug.xcconfig"; sourceTree = "<group>"; };
+		7A05657127EE1E5A0076BD9A /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		7A05657427EE1F0A0076BD9A /* Tracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tracker.xcdatamodel; sourceTree = "<group>"; };
 		7A30423827E5FD5100D6D7FD /* MapServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapServiceProtocol.swift; sourceTree = "<group>"; };
+		7A4799C227EE2329001E4DB4 /* Route+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Route+CoreDataClass.swift"; sourceTree = "<group>"; };
+		7A4799C327EE2329001E4DB4 /* Route+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Route+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		7A4799C427EE2329001E4DB4 /* Coordinate+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coordinate+CoreDataClass.swift"; sourceTree = "<group>"; };
+		7A4799C527EE2329001E4DB4 /* Coordinate+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coordinate+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		7A4799CD27EF5C56001E4DB4 /* DataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRepository.swift; sourceTree = "<group>"; };
 		7A4B6F6827E3D07100D8C2CD /* GoogleMapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapService.swift; sourceTree = "<group>"; };
 		7A82AAC927E9FEDE0015FCFF /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
 		7AA3F90227DE7367001E39BC /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,6 +74,39 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		7A05656E27EE1CF60076BD9A /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				7A4799C227EE2329001E4DB4 /* Route+CoreDataClass.swift */,
+				7A4799C327EE2329001E4DB4 /* Route+CoreDataProperties.swift */,
+				7A4799C427EE2329001E4DB4 /* Coordinate+CoreDataClass.swift */,
+				7A4799C527EE2329001E4DB4 /* Coordinate+CoreDataProperties.swift */,
+				7A05657327EE1F0A0076BD9A /* Tracker.xcdatamodeld */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		7A05656F27EE1E2D0076BD9A /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				7A05657127EE1E5A0076BD9A /* CoreDataStack.swift */,
+				7A4799CD27EF5C56001E4DB4 /* DataRepository.swift */,
+			);
+			path = "Core Data";
+			sourceTree = "<group>";
+		};
+		7A05657027EE1E460076BD9A /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+				7AE3CD4C27E218F600141D13 /* MapKitKeys.swift */,
+				7A30423827E5FD5100D6D7FD /* MapServiceProtocol.swift */,
+				7AEAE80227E7BBAB0042491B /* MapServiceType.swift */,
+				7A4B6F6827E3D07100D8C2CD /* GoogleMapService.swift */,
+				7AEAE80427E7C89B0042491B /* AppleMapService.swift */,
+			);
+			path = Maps;
+			sourceTree = "<group>";
+		};
 		7A82AAC827E9FED10015FCFF /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +139,7 @@
 				7AE3CD4727E2175800141D13 /* App */,
 				7AE3CD4827E2176C00141D13 /* Flows */,
 				7AE3CD4B27E218CF00141D13 /* Core */,
+				7A05656E27EE1CF60076BD9A /* Entities */,
 				7A82AAC827E9FED10015FCFF /* Views */,
 				7AE3CD4927E2179A00141D13 /* Resources */,
 				7AE3CD4A27E217CA00141D13 /* Environments */,
@@ -137,11 +185,8 @@
 		7AE3CD4B27E218CF00141D13 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				7AE3CD4C27E218F600141D13 /* MapKitKeys.swift */,
-				7A30423827E5FD5100D6D7FD /* MapServiceProtocol.swift */,
-				7AEAE80227E7BBAB0042491B /* MapServiceType.swift */,
-				7A4B6F6827E3D07100D8C2CD /* GoogleMapService.swift */,
-				7AEAE80427E7C89B0042491B /* AppleMapService.swift */,
+				7A05657027EE1E460076BD9A /* Maps */,
+				7A05656F27EE1E2D0076BD9A /* Core Data */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -271,11 +316,18 @@
 				7A4B6F6927E3D07100D8C2CD /* GoogleMapService.swift in Sources */,
 				7AEAE80527E7C89B0042491B /* AppleMapService.swift in Sources */,
 				7AA3F90A27DE7367001E39BC /* MapViewController.swift in Sources */,
+				7A4799C827EE2329001E4DB4 /* Coordinate+CoreDataClass.swift in Sources */,
+				7A4799C627EE2329001E4DB4 /* Route+CoreDataClass.swift in Sources */,
 				7A82AACA27E9FEDE0015FCFF /* RoundButton.swift in Sources */,
+				7A05657527EE1F0A0076BD9A /* Tracker.xcdatamodeld in Sources */,
 				7AEAE80327E7BBAB0042491B /* MapServiceType.swift in Sources */,
+				7A4799C927EE2329001E4DB4 /* Coordinate+CoreDataProperties.swift in Sources */,
+				7A4799C727EE2329001E4DB4 /* Route+CoreDataProperties.swift in Sources */,
+				7A05657227EE1E5A0076BD9A /* CoreDataStack.swift in Sources */,
 				7AE3CD4D27E218F600141D13 /* MapKitKeys.swift in Sources */,
 				7AA3F90627DE7367001E39BC /* AppDelegate.swift in Sources */,
 				7AA3F90827DE7367001E39BC /* SceneDelegate.swift in Sources */,
+				7A4799CE27EF5C56001E4DB4 /* DataRepository.swift in Sources */,
 				7A30423927E5FD5100D6D7FD /* MapServiceProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -509,6 +561,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		7A05657327EE1F0A0076BD9A /* Tracker.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7A05657427EE1F0A0076BD9A /* Tracker.xcdatamodel */,
+			);
+			currentVersion = 7A05657427EE1F0A0076BD9A /* Tracker.xcdatamodel */;
+			path = Tracker.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7AA3F8FA27DE7367001E39BC /* Project object */;
 }

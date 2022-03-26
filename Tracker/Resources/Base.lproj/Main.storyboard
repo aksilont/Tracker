@@ -58,28 +58,21 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9c9-D1-afd">
-                                        <rect key="frame" x="29.999999999999993" y="70" width="95.333333333333314" height="43.666666666666657"/>
+                                        <rect key="frame" x="30" y="70" width="65" height="65"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sLE-fk-8dN" customClass="RoundButton" customModule="Tracker" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="43.666666666666664" height="43.666666666666664"/>
-                                                <color key="tintColor" systemColor="systemGreenColor"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="65" id="CrR-JO-pEm"/>
+                                                    <constraint firstAttribute="width" constant="65" id="XyD-O2-FPD"/>
+                                                </constraints>
+                                                <color key="tintColor" systemColor="systemPurpleColor"/>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" image="play.fill" catalog="system" cornerStyle="capsule">
+                                                <buttonConfiguration key="configuration" style="plain" image="playpause" catalog="system">
                                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25"/>
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="startRecordRoute:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oIx-08-jSm"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FOc-OO-cTW" customClass="RoundButton" customModule="Tracker" customModuleProvider="target">
-                                                <rect key="frame" x="51.666666666666671" y="0.0" width="43.666666666666671" height="43.666666666666664"/>
-                                                <color key="tintColor" systemColor="systemPinkColor"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" image="stop.fill" catalog="system" cornerStyle="capsule">
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25"/>
-                                                </buttonConfiguration>
-                                                <connections>
-                                                    <action selector="stopRecordRoute:" destination="BYZ-38-t0r" eventType="touchUpInside" id="djU-Z2-V1N"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -146,20 +139,16 @@
     <resources>
         <image name="location.north.fill" catalog="system" width="108" height="128"/>
         <image name="minus" catalog="system" width="128" height="24"/>
-        <image name="play.fill" catalog="system" width="116" height="128"/>
+        <image name="playpause" catalog="system" width="128" height="80"/>
         <image name="plus" catalog="system" width="128" height="113"/>
-        <image name="stop.fill" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemPurpleColor">
+            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

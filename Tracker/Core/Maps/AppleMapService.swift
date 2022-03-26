@@ -5,7 +5,6 @@
 //  Created by Aksilont on 20.03.2022.
 //
 
-import Foundation
 import Combine
 import CoreLocation
 import MapKit
@@ -25,8 +24,11 @@ class AppleMapService: NSObject, MapServiceProtocol {
     private var radiusPublisher = PassthroughSubject<Double, Never>()
     private var subscription: Set<AnyCancellable> = []
     
-    private var route = [CLLocationCoordinate2D]()
+    private var route: [CLLocationCoordinate2D] = []
     private var isTracking = false
+    
+    private let dataRepository = DataRepository()
+    private var routes: [Route] = []
     
     required init(contentView: UIView) {
         self.contentView = contentView
@@ -46,6 +48,29 @@ class AppleMapService: NSObject, MapServiceProtocol {
         radiusPublisher
             .sink { [unowned self] _ in setCamera(to: mapView.centerCoordinate) }
             .store(in: &subscription)
+        
+        dataRepository.fetchRoutes { [unowned self] in routes = $0 }
+        
+        routes.forEach { showRoute($0) }
+    }
+    
+    func showRoute(_ route: Route) {
+        guard let result = route.coordinates else { return }
+        let coordinates = result.map { item -> CLLocationCoordinate2D in
+            let location = item as! Coordinate
+            return CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+        }
+        
+        let routePolyLine = MKPolyline(coordinates: coordinates, count: coordinates.count)
+        mapView.addOverlay(routePolyLine)
+    }
+    
+    func showRoute(with coordinates: [CLLocationCoordinate2D]) {
+        let routePolyLine = MKPolyline(coordinates: coordinates, count: coordinates.count)
+        mapView.addOverlay(routePolyLine)
+        let mapRect = routePolyLine.boundingMapRect.insetBy(dx: -radius * 2, dy: -radius * 2)
+        mapView.setVisibleMapRect(mapRect, animated: true)
+//        mapView.setCenter(routePolyLine.coordinate, animated: false)
     }
     
     @objc func tapOnTheMap(_ sender: UIGestureRecognizer) {
@@ -65,7 +90,7 @@ class AppleMapService: NSObject, MapServiceProtocol {
             removeAllOverlays()
             
             let routePolyLine = MKPolyline(coordinates: route, count: route.count)
-            mapView.addOverlay(routePolyLine)
+            mapView.addOverlay(routePolyLine)            
         }
     }
     
@@ -93,6 +118,13 @@ class AppleMapService: NSObject, MapServiceProtocol {
         setCamera(to: currentLocation)
     }
     
+    
+    func removeAllOverlays() {
+        mapView.removeOverlays(mapView.overlays)
+    }
+    
+    // MARK: - Zoom
+    
     func zoomIn() {
         radius = radius / 2 <= 100 ? 100 : radius / 2
         radiusPublisher.send(radius)
@@ -103,17 +135,24 @@ class AppleMapService: NSObject, MapServiceProtocol {
         radiusPublisher.send(radius)
     }
     
-    func removeAllOverlays() {
-        mapView.removeOverlays(mapView.overlays)
+    // MARK: - Recording current route
+    
+    func startStopRecordRoute() {
+        isTracking ? stopRecordRoute() : startRecordRoute()
     }
     
-    func startRecordRoute() {
+    private func startRecordRoute() {
         route = []
         removeAllOverlays()
         isTracking = true
     }
     
-    func stopRecordRoute() {
+    private func stopRecordRoute() {
+        let currentRoute = dataRepository.createNewRoute()
+        for item in route {
+            dataRepository.add(coordinate: item, to: currentRoute)
+        }
+        
         isTracking = false
         route = []
         removeAllOverlays()
@@ -128,6 +167,8 @@ class AppleMapService: NSObject, MapServiceProtocol {
         subscription.removeAll()
     }
 }
+
+// MARK: - MKMapViewDelegate
 
 extension AppleMapService: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

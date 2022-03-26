@@ -10,11 +10,14 @@ import CoreLocation
 import Combine
 
 class MapViewController: UIViewController {
+    
     // MARK: - IBOutlets
+    
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var addressLabel: UILabel!
     
     // MARK: - Properties
+    
     var mapServiceType: MapServiceType!
     private var mapService: MapServiceProtocol!
     private var locationManager: CLLocationManager!
@@ -71,14 +74,10 @@ class MapViewController: UIViewController {
         mapService.zoomOut()
     }
     
-    
-    @IBAction func startRecordRoute(_ sender: UIButton) {
-        mapService.startRecordRoute()
+    @IBAction func startStopRecordRoute(_ sender: UIButton) {
+        mapService.startStopRecordRoute()
     }
     
-    @IBAction func stopRecordRoute(_ sender: UIButton) {
-        mapService.stopRecordRoute()
-    }
     // MARK: - Deinit
     
     deinit {
@@ -89,6 +88,7 @@ class MapViewController: UIViewController {
 }
 
 // MARK: - CLLocationManagerDelegate
+
 extension MapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager,
