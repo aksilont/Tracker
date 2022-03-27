@@ -57,32 +57,27 @@
                                             <action selector="currentLocationTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IS9-DJ-7OV"/>
                                         </connections>
                                     </button>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9c9-D1-afd">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sLE-fk-8dN" customClass="RoundButton" customModule="Tracker" customModuleProvider="target">
                                         <rect key="frame" x="30" y="70" width="65" height="65"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sLE-fk-8dN" customClass="RoundButton" customModule="Tracker" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="65" id="CrR-JO-pEm"/>
-                                                    <constraint firstAttribute="width" constant="65" id="XyD-O2-FPD"/>
-                                                </constraints>
-                                                <color key="tintColor" systemColor="systemPurpleColor"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" image="playpause" catalog="system">
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25"/>
-                                                </buttonConfiguration>
-                                                <connections>
-                                                    <action selector="startRecordRoute:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oIx-08-jSm"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="65" id="CrR-JO-pEm"/>
+                                            <constraint firstAttribute="width" constant="65" id="XyD-O2-FPD"/>
+                                        </constraints>
+                                        <color key="tintColor" systemColor="systemPurpleColor"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="playpause" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="startStopRecordRoute:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VQR-8v-E2O"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="9c9-D1-afd" firstAttribute="leading" secondItem="bsd-LC-Tik" secondAttribute="leading" constant="30" id="Pcy-Y3-K9m"/>
                                     <constraint firstAttribute="bottom" secondItem="ZoV-Ac-hEx" secondAttribute="bottom" constant="50" id="RWa-ae-SNx"/>
-                                    <constraint firstItem="9c9-D1-afd" firstAttribute="top" secondItem="bsd-LC-Tik" secondAttribute="top" constant="70" id="SGF-Cx-wgQ"/>
+                                    <constraint firstItem="sLE-fk-8dN" firstAttribute="leading" secondItem="bsd-LC-Tik" secondAttribute="leading" constant="30" id="TKB-VG-aUc"/>
+                                    <constraint firstItem="sLE-fk-8dN" firstAttribute="top" secondItem="bsd-LC-Tik" secondAttribute="top" constant="70" id="TuC-5J-rtI"/>
                                     <constraint firstAttribute="trailing" secondItem="ZoV-Ac-hEx" secondAttribute="trailing" constant="20" id="c3t-ZJ-Bl4"/>
                                     <constraint firstAttribute="trailing" secondItem="bCc-go-Dnd" secondAttribute="trailing" constant="20" id="l8N-2E-Ajp"/>
                                     <constraint firstItem="bCc-go-Dnd" firstAttribute="centerY" secondItem="bsd-LC-Tik" secondAttribute="centerY" id="oAz-gd-pWh"/>
@@ -107,7 +102,22 @@
                             <constraint firstAttribute="bottom" secondItem="bsd-LC-Tik" secondAttribute="bottom" id="ps1-A5-RDu"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="fE7-FP-48f"/>
+                    <navigationItem key="navigationItem" id="fE7-FP-48f">
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" image="arrow.right.to.line" catalog="system" id="UvL-aH-0BO">
+                                <color key="tintColor" systemColor="systemGreenColor"/>
+                                <connections>
+                                    <action selector="nextRoute:" destination="BYZ-38-t0r" id="Fae-Xd-BoF"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="arrow.left.to.line" catalog="system" id="weq-5R-BuM">
+                                <color key="tintColor" systemColor="systemPinkColor"/>
+                                <connections>
+                                    <action selector="previousRoute:" destination="BYZ-38-t0r" id="4hy-FQ-bEg"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <connections>
                         <outlet property="addressLabel" destination="0oi-F7-zTN" id="3Gn-Tz-hYL"/>
                         <outlet property="contentView" destination="bsd-LC-Tik" id="S22-pE-K6Q"/>
@@ -137,6 +147,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.left.to.line" catalog="system" width="128" height="89"/>
+        <image name="arrow.right.to.line" catalog="system" width="128" height="89"/>
         <image name="location.north.fill" catalog="system" width="108" height="128"/>
         <image name="minus" catalog="system" width="128" height="24"/>
         <image name="playpause" catalog="system" width="128" height="80"/>
@@ -146,6 +158,12 @@
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPurpleColor">
             <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

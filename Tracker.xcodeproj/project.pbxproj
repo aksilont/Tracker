@@ -23,8 +23,9 @@
 		7AA3F90D27DE7367001E39BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7AA3F90B27DE7367001E39BC /* Main.storyboard */; };
 		7AA3F90F27DE7367001E39BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7AA3F90E27DE7367001E39BC /* Assets.xcassets */; };
 		7AA3F91227DE7367001E39BC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7AA3F91027DE7367001E39BC /* LaunchScreen.storyboard */; };
+		7AD5BBB927F0D2F600F752E9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD5BBB827F0D2F600F752E9 /* LocationManager.swift */; };
 		7AE3CD4D27E218F600141D13 /* MapKitKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE3CD4C27E218F600141D13 /* MapKitKeys.swift */; };
-		7AEAE80327E7BBAB0042491B /* MapServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEAE80227E7BBAB0042491B /* MapServiceType.swift */; };
+		7AEAE80327E7BBAB0042491B /* MapType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEAE80227E7BBAB0042491B /* MapType.swift */; };
 		7AEAE80527E7C89B0042491B /* AppleMapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEAE80427E7C89B0042491B /* AppleMapService.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,8 +49,9 @@
 		7AA3F90E27DE7367001E39BC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7AA3F91127DE7367001E39BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7AA3F91327DE7367001E39BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7AD5BBB827F0D2F600F752E9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		7AE3CD4C27E218F600141D13 /* MapKitKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitKeys.swift; sourceTree = "<group>"; };
-		7AEAE80227E7BBAB0042491B /* MapServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapServiceType.swift; sourceTree = "<group>"; };
+		7AEAE80227E7BBAB0042491B /* MapType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapType.swift; sourceTree = "<group>"; };
 		7AEAE80427E7C89B0042491B /* AppleMapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMapService.swift; sourceTree = "<group>"; };
 		887CFEB720A3E3E9FB26E6F2 /* Pods-Tracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tracker.release.xcconfig"; path = "Target Support Files/Pods-Tracker/Pods-Tracker.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,7 +102,7 @@
 			children = (
 				7AE3CD4C27E218F600141D13 /* MapKitKeys.swift */,
 				7A30423827E5FD5100D6D7FD /* MapServiceProtocol.swift */,
-				7AEAE80227E7BBAB0042491B /* MapServiceType.swift */,
+				7AEAE80227E7BBAB0042491B /* MapType.swift */,
 				7A4B6F6827E3D07100D8C2CD /* GoogleMapService.swift */,
 				7AEAE80427E7C89B0042491B /* AppleMapService.swift */,
 			);
@@ -147,6 +149,14 @@
 			path = Tracker;
 			sourceTree = "<group>";
 		};
+		7AD5BBB727F0D2C900F752E9 /* Location manager */ = {
+			isa = PBXGroup;
+			children = (
+				7AD5BBB827F0D2F600F752E9 /* LocationManager.swift */,
+			);
+			path = "Location manager";
+			sourceTree = "<group>";
+		};
 		7AE3CD4727E2175800141D13 /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +197,7 @@
 			children = (
 				7A05657027EE1E460076BD9A /* Maps */,
 				7A05656F27EE1E2D0076BD9A /* Core Data */,
+				7AD5BBB727F0D2C900F752E9 /* Location manager */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -314,13 +325,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A4B6F6927E3D07100D8C2CD /* GoogleMapService.swift in Sources */,
+				7AD5BBB927F0D2F600F752E9 /* LocationManager.swift in Sources */,
 				7AEAE80527E7C89B0042491B /* AppleMapService.swift in Sources */,
 				7AA3F90A27DE7367001E39BC /* MapViewController.swift in Sources */,
 				7A4799C827EE2329001E4DB4 /* Coordinate+CoreDataClass.swift in Sources */,
 				7A4799C627EE2329001E4DB4 /* Route+CoreDataClass.swift in Sources */,
 				7A82AACA27E9FEDE0015FCFF /* RoundButton.swift in Sources */,
 				7A05657527EE1F0A0076BD9A /* Tracker.xcdatamodeld in Sources */,
-				7AEAE80327E7BBAB0042491B /* MapServiceType.swift in Sources */,
+				7AEAE80327E7BBAB0042491B /* MapType.swift in Sources */,
 				7A4799C927EE2329001E4DB4 /* Coordinate+CoreDataProperties.swift in Sources */,
 				7A4799C727EE2329001E4DB4 /* Route+CoreDataProperties.swift in Sources */,
 				7A05657227EE1E5A0076BD9A /* CoreDataStack.swift in Sources */,

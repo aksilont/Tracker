@@ -53,7 +53,6 @@ final class DataRepository {
         let coordinates = route.coordinates?.mutableCopy() as? NSMutableOrderedSet
         coordinates?.add(newCoordinate)
         route.coordinates = coordinates
-//        route.coordinates?.add(newCoordinate)
         
         do {
             try context.save()

@@ -10,6 +10,9 @@ import CoreLocation
 import MapKit
 
 class AppleMapService: NSObject, MapServiceProtocol {
+    
+    // MARK: - Properties
+    
     private let geocoder = CLGeocoder()
     private var marker: MKPointAnnotation = MKPointAnnotation()
     private var manualMarker: MKPointAnnotation = MKPointAnnotation()
@@ -20,8 +23,7 @@ class AppleMapService: NSObject, MapServiceProtocol {
     
     var contentView: UIView
     var mapView = MKMapView()
-    var publisher = PassthroughSubject<String, Never>()
-    private var radiusPublisher = PassthroughSubject<Double, Never>()
+    var addressPublisher = PassthroughSubject<String, Never>()
     private var subscription: Set<AnyCancellable> = []
     
     private var route: [CLLocationCoordinate2D] = []
@@ -29,10 +31,15 @@ class AppleMapService: NSObject, MapServiceProtocol {
     
     private let dataRepository = DataRepository()
     private var routes: [Route] = []
+    private var currentRouteIndex = 0
+    
+    // MARK: - Init
     
     required init(contentView: UIView) {
         self.contentView = contentView
     }
+    
+    // MARK: - Configure
     
     func configureMap() {
         let region = MKCoordinateRegion(center: coordinateMoscow, latitudinalMeters: radius, longitudinalMeters: radius)
@@ -45,13 +52,20 @@ class AppleMapService: NSObject, MapServiceProtocol {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnTheMap))
         mapView.addGestureRecognizer(tapGesture)
         
-        radiusPublisher
-            .sink { [unowned self] _ in setCamera(to: mapView.centerCoordinate) }
-            .store(in: &subscription)
-        
+        fetchRoutes()
+    }
+    
+    @objc func tapOnTheMap(_ sender: UIGestureRecognizer) {
+        let coordinate = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
+        manualMarker.coordinate = coordinate
+        mapView.removeAnnotation(manualMarker)
+        mapView.addAnnotation(manualMarker)
+    }
+    
+    // MARK: - Routes
+    
+    func fetchRoutes() {
         dataRepository.fetchRoutes { [unowned self] in routes = $0 }
-        
-        routes.forEach { showRoute($0) }
     }
     
     func showRoute(_ route: Route) {
@@ -61,24 +75,27 @@ class AppleMapService: NSObject, MapServiceProtocol {
             return CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
         }
         
-        let routePolyLine = MKPolyline(coordinates: coordinates, count: coordinates.count)
-        mapView.addOverlay(routePolyLine)
+        setCameraToRoute(with: coordinates)
     }
     
-    func showRoute(with coordinates: [CLLocationCoordinate2D]) {
-        let routePolyLine = MKPolyline(coordinates: coordinates, count: coordinates.count)
-        mapView.addOverlay(routePolyLine)
-        let mapRect = routePolyLine.boundingMapRect.insetBy(dx: -radius * 2, dy: -radius * 2)
-        mapView.setVisibleMapRect(mapRect, animated: true)
-//        mapView.setCenter(routePolyLine.coordinate, animated: false)
+    func nextRoute(reverse: Bool) {
+        isTracking = false
+        route = []
+        removeAllOverlays()
+        
+        let routesCount = routes.count
+        
+        guard routesCount > 0 else { return }
+        
+        showRoute(routes[currentRouteIndex])
+        if reverse {
+            currentRouteIndex = currentRouteIndex == 0 ? routesCount - 1 : currentRouteIndex - 1
+        } else {
+            currentRouteIndex = currentRouteIndex == routesCount - 1 ? 0 : currentRouteIndex + 1
+        }
     }
     
-    @objc func tapOnTheMap(_ sender: UIGestureRecognizer) {
-        let coordinate = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
-        manualMarker.coordinate = coordinate
-        mapView.removeAnnotation(manualMarker)
-        mapView.addAnnotation(manualMarker)
-    }
+    // MARK: - Current location
     
     func setCurrentLocation(_ location: CLLocationCoordinate2D) {
         currentLocation = location
@@ -94,6 +111,8 @@ class AppleMapService: NSObject, MapServiceProtocol {
         }
     }
     
+    // MARK: - Annotation
+    
     func addMarker(to location: CLLocationCoordinate2D) {
         marker.coordinate = location
         mapView.removeAnnotation(marker)
@@ -104,6 +123,8 @@ class AppleMapService: NSObject, MapServiceProtocol {
         addMarker(to: currentLocation)
         route.append(currentLocation)
     }
+    
+    // MARK: - Camera
     
     func setCamera(to location: CLLocationCoordinate2D) {
         UIView.animate(withDuration: 1) {
@@ -118,6 +139,13 @@ class AppleMapService: NSObject, MapServiceProtocol {
         setCamera(to: currentLocation)
     }
     
+    func setCameraToRoute(with coordinates: [CLLocationCoordinate2D]) {
+        let routePolyLine = MKPolyline(coordinates: coordinates, count: coordinates.count)
+        mapView.addOverlay(routePolyLine)
+        
+        let mapRect = routePolyLine.boundingMapRect.insetBy(dx: -500, dy: -500)
+        mapView.setVisibleMapRect(mapRect, animated: true)
+    }
     
     func removeAllOverlays() {
         mapView.removeOverlays(mapView.overlays)
@@ -127,15 +155,15 @@ class AppleMapService: NSObject, MapServiceProtocol {
     
     func zoomIn() {
         radius = radius / 2 <= 100 ? 100 : radius / 2
-        radiusPublisher.send(radius)
+        setCamera(to: mapView.centerCoordinate)
     }
     
     func zoomOut() {
         radius *= 2
-        radiusPublisher.send(radius)
+        setCamera(to: mapView.centerCoordinate)
     }
     
-    // MARK: - Recording current route
+    // MARK: - Route
     
     func startStopRecordRoute() {
         isTracking ? stopRecordRoute() : startRecordRoute()
@@ -148,14 +176,17 @@ class AppleMapService: NSObject, MapServiceProtocol {
     }
     
     private func stopRecordRoute() {
-        let currentRoute = dataRepository.createNewRoute()
+        let newRoute = dataRepository.createNewRoute()
         for item in route {
-            dataRepository.add(coordinate: item, to: currentRoute)
+            dataRepository.add(coordinate: item, to: newRoute)
         }
+        currentRouteIndex = routes.count
         
         isTracking = false
         route = []
         removeAllOverlays()
+        
+        fetchRoutes()
     }
     
     // MARK: - Deinit
