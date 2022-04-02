@@ -9,7 +9,7 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="coordinates" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Coordinate" inverseName="route" inverseEntity="Coordinate"/>
     </entity>
-    <entity name="Users" representedClassName="Users" syncable="YES">
+    <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="login" optional="YES" attributeType="String"/>
         <attribute name="password" optional="YES" attributeType="String"/>
@@ -17,6 +17,6 @@
     <elements>
         <element name="Coordinate" positionX="-63" positionY="-18" width="128" height="74"/>
         <element name="Route" positionX="-54" positionY="-9" width="128" height="59"/>
-        <element name="Users" positionX="-54" positionY="9" width="128" height="74"/>
+        <element name="User" positionX="-54" positionY="9" width="128" height="74"/>
     </elements>
 </model>

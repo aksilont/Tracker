@@ -1,5 +1,5 @@
 //
-//  Users+CoreDataProperties.swift
+//  User+CoreDataProperties.swift
 //  Tracker
 //
 //  Created by Aksilont on 02.04.2022.
@@ -10,10 +10,10 @@ import Foundation
 import CoreData
 
 
-extension Users {
+extension User {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Users> {
-        return NSFetchRequest<Users>(entityName: "Users")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<User> {
+        return NSFetchRequest<User>(entityName: "User")
     }
 
     @NSManaged public var id: UUID?
@@ -22,6 +22,6 @@ extension Users {
 
 }
 
-extension Users : Identifiable {
+extension User : Identifiable {
 
 }

@@ -18,6 +18,8 @@ struct LoginView: View {
     var onRecovery: (() -> ())?
     var onSignUp: (() -> ())?
     
+    let dataRepository = DataRepository()
+    
     private let keyboardIsOnPublisher = Publishers.Merge(
         NotificationCenter.default.publisher(for: UIResponder.keyboardWillChangeFrameNotification)
             .map { _ in true },
@@ -65,8 +67,13 @@ struct LoginView: View {
                     HStack {
                         Spacer()
                         Button {
-                            UserDefaults.standard.set(true, forKey: "isLogin")
-                            onLogin?()
+                            dataRepository.checkUser(login: login, password: password) { result in
+                                if result {
+                                    UserDefaults.standard.set(true, forKey: "isLogin")
+                                    onLogin?()
+                                }
+                            }
+                            
                         } label: {
                             Image(systemName: "play").foregroundColor(.white).font(.largeTitle)
                         }

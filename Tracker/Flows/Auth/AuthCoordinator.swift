@@ -45,7 +45,12 @@ class AuthCoordinator: BaseCoordinator {
     }
     
     private func showSignUpModule() {
-        let controller = UIHostingController(rootView: SignUpView())
+        var signUpView = SignUpView()
+        signUpView.onExit = { [weak self] in
+            self?.onFinishFlow?()
+        }
+        
+        let controller = UIHostingController(rootView: signUpView)
         rootController?.pushViewController(controller, animated: true)
     }
     
