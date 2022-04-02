@@ -10,19 +10,16 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    let coordinator = AppCoordinator()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mainVC = storyboard.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
-        mainVC.mapType = .apple
-        let navigationVC = UINavigationController(rootViewController: mainVC)
-        window.rootViewController = navigationVC
         window.makeKeyAndVisible()
         self.window = window
+        
+        coordinator.start()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
