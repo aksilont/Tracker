@@ -20,8 +20,8 @@ class MainCoordinator: BaseCoordinator {
     private func showMainModule() {
         var mainView = MainView()
         
-        mainView.onMap = { [weak self] someProp in
-            self?.showMapModule(someProp: someProp)
+        mainView.onMap = { [weak self] mapType in
+            self?.showMapModule(mapType: mapType)
         }
         
         mainView.onLogout = { [weak self] in
@@ -35,10 +35,10 @@ class MainCoordinator: BaseCoordinator {
         self.rootController = rootController
     }
     
-    private func showMapModule(someProp: String) {
+    private func showMapModule(mapType: MapType) {
         let controller = UIStoryboard(name: "Map", bundle: nil)
             .instantiateViewController(MapViewController.self)
-        controller.someProp = someProp
+        controller.mapType = mapType
         controller.navigationItem.hidesBackButton = true
         rootController?.pushViewController(controller, animated: true)
     }
