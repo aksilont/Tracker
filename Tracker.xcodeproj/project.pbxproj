@@ -38,6 +38,7 @@
 		7AD5BBEA27F8A7FA00F752E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7AD5BBE927F8A7FA00F752E9 /* Main.storyboard */; };
 		7AE3CD4D27E218F600141D13 /* MapKitKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE3CD4C27E218F600141D13 /* MapKitKeys.swift */; };
 		7AEAD0EA27FC851B001A2BB4 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEAD0E927FC851B001A2BB4 /* MainViewModel.swift */; };
+		7AEAD0EC27FC8B33001A2BB4 /* SecretView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEAD0EB27FC8B33001A2BB4 /* SecretView.swift */; };
 		7AEAE80327E7BBAB0042491B /* MapType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEAE80227E7BBAB0042491B /* MapType.swift */; };
 		7AEAE80527E7C89B0042491B /* AppleMapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEAE80427E7C89B0042491B /* AppleMapService.swift */; };
 /* End PBXBuildFile section */
@@ -77,6 +78,7 @@
 		7AD5BBE927F8A7FA00F752E9 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		7AE3CD4C27E218F600141D13 /* MapKitKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitKeys.swift; sourceTree = "<group>"; };
 		7AEAD0E927FC851B001A2BB4 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		7AEAD0EB27FC8B33001A2BB4 /* SecretView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretView.swift; sourceTree = "<group>"; };
 		7AEAE80227E7BBAB0042491B /* MapType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapType.swift; sourceTree = "<group>"; };
 		7AEAE80427E7C89B0042491B /* AppleMapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMapService.swift; sourceTree = "<group>"; };
 		887CFEB720A3E3E9FB26E6F2 /* Pods-Tracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tracker.release.xcconfig"; path = "Target Support Files/Pods-Tracker/Pods-Tracker.release.xcconfig"; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				7A82AAC927E9FEDE0015FCFF /* RoundButton.swift */,
+				7AEAD0EB27FC8B33001A2BB4 /* SecretView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -396,6 +399,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7AEAD0EC27FC8B33001A2BB4 /* SecretView.swift in Sources */,
 				7A4B6F6927E3D07100D8C2CD /* GoogleMapService.swift in Sources */,
 				7AD5BBD127F5F87600F752E9 /* MainCoordinator.swift in Sources */,
 				7AD5BBB927F0D2F600F752E9 /* LocationManager.swift in Sources */,
