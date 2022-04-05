@@ -37,6 +37,7 @@
 		7AD5BBE827F8A32300F752E9 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD5BBE627F8A32300F752E9 /* User+CoreDataProperties.swift */; };
 		7AD5BBEA27F8A7FA00F752E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7AD5BBE927F8A7FA00F752E9 /* Main.storyboard */; };
 		7AE3CD4D27E218F600141D13 /* MapKitKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE3CD4C27E218F600141D13 /* MapKitKeys.swift */; };
+		7AEAD0EA27FC851B001A2BB4 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEAD0E927FC851B001A2BB4 /* MainViewModel.swift */; };
 		7AEAE80327E7BBAB0042491B /* MapType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEAE80227E7BBAB0042491B /* MapType.swift */; };
 		7AEAE80527E7C89B0042491B /* AppleMapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEAE80427E7C89B0042491B /* AppleMapService.swift */; };
 /* End PBXBuildFile section */
@@ -75,6 +76,7 @@
 		7AD5BBE627F8A32300F752E9 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7AD5BBE927F8A7FA00F752E9 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		7AE3CD4C27E218F600141D13 /* MapKitKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitKeys.swift; sourceTree = "<group>"; };
+		7AEAD0E927FC851B001A2BB4 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		7AEAE80227E7BBAB0042491B /* MapType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapType.swift; sourceTree = "<group>"; };
 		7AEAE80427E7C89B0042491B /* AppleMapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMapService.swift; sourceTree = "<group>"; };
 		887CFEB720A3E3E9FB26E6F2 /* Pods-Tracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tracker.release.xcconfig"; path = "Target Support Files/Pods-Tracker/Pods-Tracker.release.xcconfig"; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				7AD5BBD027F5F87600F752E9 /* MainCoordinator.swift */,
+				7AEAD0E927FC851B001A2BB4 /* MainViewModel.swift */,
 				7AD5BBD927F87B8D00F752E9 /* MainView.swift */,
 				7AD5BBE927F8A7FA00F752E9 /* Main.storyboard */,
 			);
@@ -404,6 +407,7 @@
 				7AD5BBE727F8A32300F752E9 /* User+CoreDataClass.swift in Sources */,
 				7A4799C627EE2329001E4DB4 /* Route+CoreDataClass.swift in Sources */,
 				7A82AACA27E9FEDE0015FCFF /* RoundButton.swift in Sources */,
+				7AEAD0EA27FC851B001A2BB4 /* MainViewModel.swift in Sources */,
 				7AD5BBCD27F5F7A700F752E9 /* BaseCoordinator.swift in Sources */,
 				7A05657527EE1F0A0076BD9A /* Tracker.xcdatamodeld in Sources */,
 				7AD5BBD427F5F91900F752E9 /* UIViewController+Extension.swift in Sources */,
