@@ -5,12 +5,14 @@
 //  Created by Aksilont on 20.03.2022.
 //
 
-import Foundation
 import Combine
 import CoreLocation
 import MapKit
 
 class AppleMapService: NSObject, MapServiceProtocol {
+    
+    // MARK: - Properties
+    
     private let geocoder = CLGeocoder()
     private var marker: MKPointAnnotation = MKPointAnnotation()
     private var manualMarker: MKPointAnnotation = MKPointAnnotation()
@@ -21,16 +23,23 @@ class AppleMapService: NSObject, MapServiceProtocol {
     
     var contentView: UIView
     var mapView = MKMapView()
-    var publisher = PassthroughSubject<String, Never>()
-    private var radiusPublisher = PassthroughSubject<Double, Never>()
+    var addressPublisher = PassthroughSubject<String, Never>()
     private var subscription: Set<AnyCancellable> = []
     
-    private var route = [CLLocationCoordinate2D]()
+    private var route: [CLLocationCoordinate2D] = []
     private var isTracking = false
+    
+    private let dataRepository = DataRepository()
+    private var routes: [Route] = []
+    private var currentRouteIndex = 0
+    
+    // MARK: - Init
     
     required init(contentView: UIView) {
         self.contentView = contentView
     }
+    
+    // MARK: - Configure
     
     func configureMap() {
         let region = MKCoordinateRegion(center: coordinateMoscow, latitudinalMeters: radius, longitudinalMeters: radius)
@@ -43,9 +52,7 @@ class AppleMapService: NSObject, MapServiceProtocol {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnTheMap))
         mapView.addGestureRecognizer(tapGesture)
         
-        radiusPublisher
-            .sink { [unowned self] _ in setCamera(to: mapView.centerCoordinate) }
-            .store(in: &subscription)
+        fetchRoutes()
     }
     
     @objc func tapOnTheMap(_ sender: UIGestureRecognizer) {
@@ -54,6 +61,41 @@ class AppleMapService: NSObject, MapServiceProtocol {
         mapView.removeAnnotation(manualMarker)
         mapView.addAnnotation(manualMarker)
     }
+    
+    // MARK: - Routes
+    
+    func fetchRoutes() {
+        dataRepository.fetchRoutes { [unowned self] in routes = $0 }
+    }
+    
+    func showRoute(_ route: Route) {
+        guard let result = route.coordinates else { return }
+        let coordinates = result.map { item -> CLLocationCoordinate2D in
+            let location = item as! Coordinate
+            return CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+        }
+        
+        setCameraToRoute(with: coordinates)
+    }
+    
+    func nextRoute(reverse: Bool) {
+        isTracking = false
+        route = []
+        removeAllOverlays()
+        
+        let routesCount = routes.count
+        
+        guard routesCount > 0 else { return }
+        
+        showRoute(routes[currentRouteIndex])
+        if reverse {
+            currentRouteIndex = currentRouteIndex == 0 ? routesCount - 1 : currentRouteIndex - 1
+        } else {
+            currentRouteIndex = currentRouteIndex == routesCount - 1 ? 0 : currentRouteIndex + 1
+        }
+    }
+    
+    // MARK: - Current location
     
     func setCurrentLocation(_ location: CLLocationCoordinate2D) {
         currentLocation = location
@@ -65,9 +107,11 @@ class AppleMapService: NSObject, MapServiceProtocol {
             removeAllOverlays()
             
             let routePolyLine = MKPolyline(coordinates: route, count: route.count)
-            mapView.addOverlay(routePolyLine)
+            mapView.addOverlay(routePolyLine)            
         }
     }
+    
+    // MARK: - Annotation
     
     func addMarker(to location: CLLocationCoordinate2D) {
         marker.coordinate = location
@@ -79,6 +123,8 @@ class AppleMapService: NSObject, MapServiceProtocol {
         addMarker(to: currentLocation)
         route.append(currentLocation)
     }
+    
+    // MARK: - Camera
     
     func setCamera(to location: CLLocationCoordinate2D) {
         UIView.animate(withDuration: 1) {
@@ -93,30 +139,54 @@ class AppleMapService: NSObject, MapServiceProtocol {
         setCamera(to: currentLocation)
     }
     
-    func zoomIn() {
-        radius = radius / 2 <= 100 ? 100 : radius / 2
-        radiusPublisher.send(radius)
-    }
-    
-    func zoomOut() {
-        radius *= 2
-        radiusPublisher.send(radius)
+    func setCameraToRoute(with coordinates: [CLLocationCoordinate2D]) {
+        let routePolyLine = MKPolyline(coordinates: coordinates, count: coordinates.count)
+        mapView.addOverlay(routePolyLine)
+        
+        let mapRect = routePolyLine.boundingMapRect.insetBy(dx: -500, dy: -500)
+        mapView.setVisibleMapRect(mapRect, animated: true)
     }
     
     func removeAllOverlays() {
         mapView.removeOverlays(mapView.overlays)
     }
     
-    func startRecordRoute() {
+    // MARK: - Zoom
+    
+    func zoomIn() {
+        radius = radius / 2 <= 100 ? 100 : radius / 2
+        setCamera(to: mapView.centerCoordinate)
+    }
+    
+    func zoomOut() {
+        radius *= 2
+        setCamera(to: mapView.centerCoordinate)
+    }
+    
+    // MARK: - Route
+    
+    func startStopRecordRoute() {
+        isTracking ? stopRecordRoute() : startRecordRoute()
+    }
+    
+    private func startRecordRoute() {
         route = []
         removeAllOverlays()
         isTracking = true
     }
     
-    func stopRecordRoute() {
+    private func stopRecordRoute() {
+        let newRoute = dataRepository.createNewRoute()
+        for item in route {
+            dataRepository.add(coordinate: item, to: newRoute)
+        }
+        currentRouteIndex = routes.count
+        
         isTracking = false
         route = []
         removeAllOverlays()
+        
+        fetchRoutes()
     }
     
     // MARK: - Deinit
@@ -128,6 +198,8 @@ class AppleMapService: NSObject, MapServiceProtocol {
         subscription.removeAll()
     }
 }
+
+// MARK: - MKMapViewDelegate
 
 extension AppleMapService: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

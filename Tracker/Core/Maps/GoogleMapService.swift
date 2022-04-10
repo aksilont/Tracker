@@ -18,7 +18,7 @@ class GoogleMapService: NSObject, MapServiceProtocol {
     
     var contentView: UIView
     var mapView = GMSMapView()
-    var publisher = PassthroughSubject<String, Never>()
+    var addressPublisher = PassthroughSubject<String, Never>()
     
     required init(contentView: UIView) {
         self.contentView = contentView
@@ -61,22 +61,6 @@ class GoogleMapService: NSObject, MapServiceProtocol {
     func setCurrentLocation(_ location: CLLocationCoordinate2D) {
         currentLocation = location
     }
-    
-    func zoomIn() {
-        
-    }
-    
-    func zoomOut() {
-        
-    }
-    
-    func startRecordRoute() {
-        
-    }
-    
-    func stopRecordRoute() {
-        
-    }
 }
 
 extension GoogleMapService: GMSMapViewDelegate {
@@ -98,7 +82,7 @@ extension GoogleMapService: GMSMapViewDelegate {
             let houseNumber = address.subThoroughfare ?? ""
                            
             let addressString = "\(country), \(city), \(street), \(houseNumber)"
-            publisher.send(addressString)
+            addressPublisher.send(addressString)
         }
     }
 }

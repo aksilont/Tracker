@@ -6,20 +6,22 @@
 //
 
 import UIKit
-import CoreLocation
 import Combine
 
 class MapViewController: UIViewController {
+    
     // MARK: - IBOutlets
+    
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var addressLabel: UILabel!
     
     // MARK: - Properties
-    var mapServiceType: MapServiceType!
-    private var mapService: MapServiceProtocol!
-    private var locationManager: CLLocationManager!
     
-    private var subscription: AnyCancellable?
+    var mapType: MapType!
+    private var mapService: MapServiceProtocol!
+    private var locationManager: LocationManager!
+    
+    private var subscriptions: Set<AnyCancellable> = []
     
     // MARK: - Lify cycle
     
@@ -33,28 +35,27 @@ class MapViewController: UIViewController {
     // MARK: - Services
     
     func configureMapService() {
-        switch mapServiceType {
+        switch mapType {
         case .google:
             mapService = GoogleMapService(contentView: contentView)
         case .apple:
             mapService = AppleMapService(contentView: contentView)
         case .none:
-            mapService = GoogleMapService(contentView: contentView)
+            mapService = AppleMapService(contentView: contentView)
         }
         mapService.contentView = contentView
         mapService.configureMap()
         
-        subscription = mapService.publisher.sink { [unowned self] in addressLabel.text = $0 }
+        mapService.addressPublisher
+            .sink { [unowned self] in addressLabel.text = $0 }
+            .store(in: &subscriptions)
     }
     
     func configureLocationManager() {
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.allowsBackgroundLocationUpdates = true
-        locationManager.pausesLocationUpdatesAutomatically = false
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startMonitoringSignificantLocationChanges()
-        locationManager.requestAlwaysAuthorization()
+        locationManager = LocationManager()
+        locationManager.currentLocationPublisher
+            .sink { [unowned self] in mapService.setCurrentLocation($0) }
+            .store(in: &subscriptions)
     }
     
     // MARK: - IBActions
@@ -71,52 +72,25 @@ class MapViewController: UIViewController {
         mapService.zoomOut()
     }
     
-    
-    @IBAction func startRecordRoute(_ sender: UIButton) {
-        mapService.startRecordRoute()
+    @IBAction func startStopRecordRoute(_ sender: UIButton) {
+        mapService.startStopRecordRoute()
     }
     
-    @IBAction func stopRecordRoute(_ sender: UIButton) {
-        mapService.stopRecordRoute()
+    @IBAction func nextRoute(_ sender: UIBarButtonItem) {
+        mapService.nextRoute(reverse: false)
     }
+    
+    @IBAction func previousRoute(_ sender: UIBarButtonItem) {
+        mapService.nextRoute(reverse: true)
+    }
+    
     // MARK: - Deinit
     
     deinit {
-        locationManager?.stopUpdatingLocation()
-        subscription = nil
-    }
-    
-}
-
-// MARK: - CLLocationManagerDelegate
-extension MapViewController: CLLocationManagerDelegate {
-    
-    func locationManager(_ manager: CLLocationManager,
-                         didChangeAuthorization status: CLAuthorizationStatus) {
-        switch status {
-        case .authorizedWhenInUse, .authorizedAlways:
-            locationManager.startUpdatingLocation()
-            break
-        case .denied:
-            // TODO: Сообщить пользователю, что нужно включить службу локации на телефоне
-            break
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-        case .restricted:
-                // TODO: Сообщить пользователю, что у приложения нет доступа к службам локации
-            break
-        @unknown default:
-            break
+        locationManager.stopUpdatingLocation()
+        for item in subscriptions {
+            item.cancel()
         }
-        
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { return }
-        mapService.setCurrentLocation(location.coordinate)
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error.localizedDescription)
-    }
 }

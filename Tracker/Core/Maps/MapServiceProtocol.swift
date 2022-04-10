@@ -11,7 +11,7 @@ import Combine
 
 protocol MapServiceProtocol {
     var contentView: UIView { get set }
-    var publisher: PassthroughSubject<String, Never> { get set }
+    var addressPublisher: PassthroughSubject<String, Never> { get set }
     
     init(contentView: UIView)
     
@@ -27,6 +27,16 @@ protocol MapServiceProtocol {
     func zoomIn()
     func zoomOut()
     
-    func startRecordRoute()
-    func stopRecordRoute()
+    func startStopRecordRoute()
+    
+    func nextRoute(reverse: Bool)
+}
+
+extension MapServiceProtocol {
+    func zoomIn() {}
+    func zoomOut() {}
+    
+    func startStopRecordRoute() {}
+    
+    func nextRoute(reverse: Bool) {}
 }
