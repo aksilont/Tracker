@@ -61,26 +61,71 @@
                                         <rect key="frame" x="30" y="70" width="65" height="65"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="65" id="CrR-JO-pEm"/>
-                                            <constraint firstAttribute="width" constant="65" id="XyD-O2-FPD"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="65" id="XyD-O2-FPD"/>
                                         </constraints>
                                         <color key="tintColor" systemColor="systemPurpleColor"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="playpause" catalog="system">
+                                        <buttonConfiguration key="configuration" style="plain" image="playpause" catalog="system" cornerStyle="capsule">
                                             <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25"/>
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="startStopRecordRoute:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VQR-8v-E2O"/>
                                         </connections>
                                     </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="LJT-Hd-unG">
+                                        <rect key="frame" x="276.66666666666669" y="80.666666666666671" width="93.333333333333314" height="43.666666666666671"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gy7-hW-mOO">
+                                                <rect key="frame" x="0.0" y="0.0" width="43.666666666666664" height="43.666666666666664"/>
+                                                <color key="tintColor" systemColor="systemOrangeColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" image="arrow.left.circle.fill" catalog="system" cornerStyle="capsule">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="previousRoute:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xJk-FL-g5O"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HyA-0h-uqv">
+                                                <rect key="frame" x="49.666666666666629" y="0.0" width="43.666666666666657" height="43.666666666666664"/>
+                                                <color key="tintColor" systemColor="systemGreenColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" image="arrow.right.circle.fill" catalog="system" cornerStyle="capsule">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="nextRoute:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cnT-lZ-Iuv"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LjV-Z1-Z1U">
+                                        <rect key="frame" x="29.999999999999996" y="747.33333333333337" width="43.666666666666657" height="43.666666666666629"/>
+                                        <color key="tintColor" systemColor="systemRedColor"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="clear.fill" catalog="system" cornerStyle="capsule">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="25"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="closeMap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Oxw-Gp-Ojc"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstItem="LjV-Z1-Z1U" firstAttribute="leading" secondItem="sLE-fk-8dN" secondAttribute="leading" id="0fb-oX-5Qd"/>
+                                    <constraint firstItem="ZoV-Ac-hEx" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="LjV-Z1-Z1U" secondAttribute="trailing" constant="8" symbolic="YES" id="1gC-e8-3Qc"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sLE-fk-8dN" secondAttribute="trailing" constant="20" symbolic="YES" id="ApA-o4-eqT"/>
+                                    <constraint firstItem="LJT-Hd-unG" firstAttribute="trailing" secondItem="CAk-a0-FqT" secondAttribute="trailing" id="Giw-hU-mjb"/>
                                     <constraint firstAttribute="bottom" secondItem="ZoV-Ac-hEx" secondAttribute="bottom" constant="50" id="RWa-ae-SNx"/>
                                     <constraint firstItem="sLE-fk-8dN" firstAttribute="leading" secondItem="bsd-LC-Tik" secondAttribute="leading" constant="30" id="TKB-VG-aUc"/>
                                     <constraint firstItem="sLE-fk-8dN" firstAttribute="top" secondItem="bsd-LC-Tik" secondAttribute="top" constant="70" id="TuC-5J-rtI"/>
                                     <constraint firstAttribute="trailing" secondItem="ZoV-Ac-hEx" secondAttribute="trailing" constant="20" id="c3t-ZJ-Bl4"/>
-                                    <constraint firstAttribute="trailing" secondItem="bCc-go-Dnd" secondAttribute="trailing" constant="20" id="l8N-2E-Ajp"/>
+                                    <constraint firstItem="bCc-go-Dnd" firstAttribute="trailing" secondItem="ZoV-Ac-hEx" secondAttribute="trailing" id="fmT-nL-0AB"/>
                                     <constraint firstItem="bCc-go-Dnd" firstAttribute="centerY" secondItem="bsd-LC-Tik" secondAttribute="centerY" id="oAz-gd-pWh"/>
+                                    <constraint firstItem="ZoV-Ac-hEx" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bsd-LC-Tik" secondAttribute="leading" constant="20" symbolic="YES" id="qcf-bX-5o3"/>
+                                    <constraint firstItem="LjV-Z1-Z1U" firstAttribute="centerY" secondItem="ZoV-Ac-hEx" secondAttribute="centerY" id="szo-Le-aRR"/>
+                                    <constraint firstItem="LJT-Hd-unG" firstAttribute="centerY" secondItem="sLE-fk-8dN" secondAttribute="centerY" id="yFH-6L-Te8"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0oi-F7-zTN">
@@ -102,22 +147,7 @@
                             <constraint firstAttribute="bottom" secondItem="bsd-LC-Tik" secondAttribute="bottom" id="ps1-A5-RDu"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="fE7-FP-48f">
-                        <rightBarButtonItems>
-                            <barButtonItem title="Item" image="arrow.right.to.line" catalog="system" id="UvL-aH-0BO">
-                                <color key="tintColor" systemColor="systemGreenColor"/>
-                                <connections>
-                                    <action selector="nextRoute:" destination="BYZ-38-t0r" id="Fae-Xd-BoF"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Item" image="arrow.left.to.line" catalog="system" id="weq-5R-BuM">
-                                <color key="tintColor" systemColor="systemPinkColor"/>
-                                <connections>
-                                    <action selector="previousRoute:" destination="BYZ-38-t0r" id="4hy-FQ-bEg"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="fE7-FP-48f"/>
                     <connections>
                         <outlet property="addressLabel" destination="0oi-F7-zTN" id="3Gn-Tz-hYL"/>
                         <outlet property="contentView" destination="bsd-LC-Tik" id="S22-pE-K6Q"/>
@@ -127,28 +157,11 @@
             </objects>
             <point key="canvasLocation" x="1369.5652173913045" y="112.5"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="nmK-m9-wOz">
-            <objects>
-                <navigationController storyboardIdentifier="MainNavigationVC" automaticallyAdjustsScrollViewInsets="NO" id="C75-At-AVa" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="p3j-SG-R9q">
-                        <rect key="frame" x="0.0" y="44" width="390" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Jqu-zX-nXR"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="TdQ-KM-91R" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="383" y="113"/>
-        </scene>
     </scenes>
     <resources>
-        <image name="arrow.left.to.line" catalog="system" width="128" height="89"/>
-        <image name="arrow.right.to.line" catalog="system" width="128" height="89"/>
+        <image name="arrow.left.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="arrow.right.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="clear.fill" catalog="system" width="128" height="114"/>
         <image name="location.north.fill" catalog="system" width="108" height="128"/>
         <image name="minus" catalog="system" width="128" height="24"/>
         <image name="playpause" catalog="system" width="128" height="80"/>
@@ -162,11 +175,14 @@
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
-        <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPurpleColor">
             <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

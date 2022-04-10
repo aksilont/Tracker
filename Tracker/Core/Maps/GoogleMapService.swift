@@ -29,7 +29,7 @@ class GoogleMapService: NSObject, MapServiceProtocol {
         mapView.camera = camera
         mapView.delegate = self
         mapView.frame = contentView.frame
-        contentView.addSubview(mapView)
+        contentView.insertSubview(mapView, at: 0)
     }
     
     func addMarker(to location: CLLocationCoordinate2D) {

@@ -60,4 +60,39 @@ final class DataRepository {
             print("Error: \(error.localizedDescription); userInfo: \(error.userInfo)")
         }
     }
+    
+    func registerOrUpdateUser(login: String, password: String, completion:  ((Bool) -> ())? = nil) {
+        let request = User.fetchRequest()
+        request.predicate = NSPredicate(format: "login = %@ AND password = %@", login, password)
+        
+        do {
+            if let result = try context.fetch(request).first {
+                result.password = password
+            } else {
+                let user = User(context: context)
+                user.id = UUID()
+                user.login = login
+                user.password = password
+            }
+            
+            try context.save()
+            completion?(true)
+        } catch let error as NSError {
+            completion?(false)
+            fatalError("Error: \(error.localizedDescription); userInfo: \(error.userInfo)")
+        }
+    }
+    
+    func checkUser(login: String, password: String, completion: @escaping (Bool) -> ()) {
+        let request = User.fetchRequest()
+        request.predicate = NSPredicate(format: "login = %@ AND password = %@", login, password)
+        
+        do {
+            let result = try context.fetch(request).first
+            return result == nil ? completion(false) : completion(true)
+        } catch let error as NSError {
+            completion(false)
+            print(error.userInfo)
+        }
+    }
 }

@@ -23,6 +23,8 @@ class MapViewController: UIViewController {
     
     private var subscriptions: Set<AnyCancellable> = []
     
+    var someProp: String = ""
+    
     // MARK: - Lify cycle
     
     override func viewDidLoad() {
@@ -76,14 +78,17 @@ class MapViewController: UIViewController {
         mapService.startStopRecordRoute()
     }
     
-    @IBAction func nextRoute(_ sender: UIBarButtonItem) {
+    @IBAction func nextRoute(_ sender: UIButton) {
         mapService.nextRoute(reverse: false)
     }
     
-    @IBAction func previousRoute(_ sender: UIBarButtonItem) {
+    @IBAction func previousRoute(_ sender: UIButton) {
         mapService.nextRoute(reverse: true)
     }
     
+    @IBAction func closeMap(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
+    }
     // MARK: - Deinit
     
     deinit {
