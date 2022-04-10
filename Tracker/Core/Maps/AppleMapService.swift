@@ -8,6 +8,7 @@
 import Combine
 import CoreLocation
 import MapKit
+import RxSwift
 
 class AppleMapService: NSObject, MapServiceProtocol {
     
@@ -24,7 +25,6 @@ class AppleMapService: NSObject, MapServiceProtocol {
     var contentView: UIView
     var mapView = MKMapView()
     var addressPublisher = PassthroughSubject<String, Never>()
-    private var subscription: Set<AnyCancellable> = []
     
     private var route: [CLLocationCoordinate2D] = []
     private var isTracking = false
@@ -32,6 +32,9 @@ class AppleMapService: NSObject, MapServiceProtocol {
     private let dataRepository = DataRepository()
     private var routes: [Route] = []
     private var currentRouteIndex = 0
+    
+    private let locationManager = LocationManager()
+    private let disposeBag = DisposeBag()
     
     // MARK: - Init
     
@@ -52,7 +55,21 @@ class AppleMapService: NSObject, MapServiceProtocol {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnTheMap))
         mapView.addGestureRecognizer(tapGesture)
         
+        configureLocationManager()
+        
         fetchRoutes()
+    }
+    
+    func configureLocationManager() {
+        locationManager.locationSubjectObservable
+            .subscribe { [weak self] event in
+                guard let self = self else { return }
+                
+                if let location = event.element {
+                    self.setCurrentLocation(location)
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     @objc func tapOnTheMap(_ sender: UIGestureRecognizer) {
@@ -192,10 +209,7 @@ class AppleMapService: NSObject, MapServiceProtocol {
     // MARK: - Deinit
     
     deinit {
-        for item in subscription {
-            item.cancel()
-        }
-        subscription.removeAll()
+        locationManager.stopUpdatingLocation()
     }
 }
 

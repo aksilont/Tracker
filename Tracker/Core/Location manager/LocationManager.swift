@@ -6,13 +6,16 @@
 //
 
 import CoreLocation
-import Combine
+import RxSwift
 
 class LocationManager: NSObject {
     
     private var locationManager: CLLocationManager!
     
-    var currentLocationPublisher = PassthroughSubject<CLLocationCoordinate2D, Never>()
+    private var locationSubject = PublishSubject<CLLocationCoordinate2D>()
+    var locationSubjectObservable: Observable<CLLocationCoordinate2D> {
+        return locationSubject.asObservable()
+    }
     
     override init() {
         super.init()
@@ -58,8 +61,7 @@ extension LocationManager: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        currentLocationPublisher.send(location.coordinate)
-//        mapService.setCurrentLocation(location.coordinate)
+        locationSubject.onNext(location.coordinate)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
