@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MainView: View {
     
+    @ObservedObject private var secretViewModel = MainViewModel()
+    
     var onMap: ((MapType) -> ())?
     var onLogout: (() -> ())?
     
@@ -28,6 +30,8 @@ struct MainView: View {
             }
             .padding()
         }
+        .blur(radius: secretViewModel.showSecretView ? 20 : 0)
+        .animation(.default, value: secretViewModel.showSecretView)
     }
 }
 

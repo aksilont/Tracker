@@ -23,7 +23,7 @@ class MapViewController: UIViewController {
     
     private var subscriptions: Set<AnyCancellable> = []
     
-    var someProp: String = ""
+    private let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     
     // MARK: - Lify cycle
     
@@ -32,6 +32,41 @@ class MapViewController: UIViewController {
         
         configureMapService()
         configureLocationManager()
+        
+        setupSecretView()
+    }
+    
+    // MARK: - Secret View (Blur Effect)
+    
+    private func setupSecretView() {
+        visualEffectView.frame = view.frame
+        visualEffectView.frame.origin.y -= self.visualEffectView.frame.size.height
+        view.addSubview(visualEffectView)
+        
+        addObserver()
+    }
+    
+    private func addObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appMovedToBackground),
+                                               name: UIApplication.willResignActiveNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appBecomesActive),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
+    }
+    
+    @objc func appMovedToBackground() {
+        UIView.animate(withDuration: 1.0) { [unowned self] in
+            visualEffectView.frame.origin.y += visualEffectView.frame.size.height
+        }
+    }
+    
+    @objc func appBecomesActive() {
+        UIView.animate(withDuration: 1.0) { [unowned self] in
+            visualEffectView.frame.origin.y -= visualEffectView.frame.size.height
+        }
     }
     
     // MARK: - Services
