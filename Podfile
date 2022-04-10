@@ -7,5 +7,7 @@ target 'Tracker' do
 
   # Pods for Tracker
   pod 'GoogleMaps', '6.0.1'
+  pod 'RxSwift', '6.5.0'
+  pod 'RxCocoa', '6.5.0'
 
 end

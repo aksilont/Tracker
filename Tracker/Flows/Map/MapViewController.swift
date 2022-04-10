@@ -19,10 +19,7 @@ class MapViewController: UIViewController {
     
     var mapType: MapType!
     private var mapService: MapServiceProtocol!
-    private var locationManager: LocationManager!
-    
     private var subscriptions: Set<AnyCancellable> = []
-    
     private let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     
     // MARK: - Lify cycle
@@ -31,8 +28,6 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         
         configureMapService()
-        configureLocationManager()
-        
         setupSecretView()
     }
     
@@ -88,13 +83,6 @@ class MapViewController: UIViewController {
             .store(in: &subscriptions)
     }
     
-    func configureLocationManager() {
-        locationManager = LocationManager()
-        locationManager.currentLocationPublisher
-            .sink { [unowned self] in mapService.setCurrentLocation($0) }
-            .store(in: &subscriptions)
-    }
-    
     // MARK: - IBActions
     
     @IBAction func currentLocationTapped(_ sender: UIButton) {
@@ -127,7 +115,6 @@ class MapViewController: UIViewController {
     // MARK: - Deinit
     
     deinit {
-        locationManager.stopUpdatingLocation()
         for item in subscriptions {
             item.cancel()
         }
