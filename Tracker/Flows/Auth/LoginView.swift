@@ -66,26 +66,34 @@ struct LoginView: View {
                     
                     HStack {
                         Spacer()
-                        Button {
-                            dataRepository.checkUser(login: login, password: password) { result in
-                                if result {
-                                    UserDefaults.standard.set(true, forKey: "isLogin")
-                                    onLogin?()
+                        if login.isEmpty || password.isEmpty {
+                            Image(systemName: "xmark").foregroundColor(.white).font(.largeTitle)
+                            .padding()
+                            .background(.gray.opacity(0.5))
+                            .clipShape(Circle())
+                            .padding(.trailing, 40)
+                        } else {
+                            Button {
+                                dataRepository.checkUser(login: login, password: password) { result in
+                                    if result {
+                                        UserDefaults.standard.set(true, forKey: "isLogin")
+                                        onLogin?()
+                                    }
                                 }
+                                
+                            } label: {
+                                Image(systemName: "play").foregroundColor(.white).font(.largeTitle)
                             }
-                            
-                        } label: {
-                            Image(systemName: "play").foregroundColor(.white).font(.largeTitle)
+                            .padding()
+                            .background(
+                                LinearGradient(colors: [Color(#colorLiteral(red: 0.5529411765, green: 0.8784313725, blue: 0.6588235294, alpha: 1)), Color(#colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1))],
+                                               startPoint: .trailing,
+                                               endPoint: .leading)
+                            )
+                            .clipShape(Circle())
+                            .shadow(color: .gray.opacity(0.5), radius: 7, y: 5)
+                            .padding(.trailing, 40)
                         }
-                        .padding()
-                        .background(
-                            LinearGradient(colors: [Color(#colorLiteral(red: 0.5529411765, green: 0.8784313725, blue: 0.6588235294, alpha: 1)), Color(#colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1))],
-                                           startPoint: .trailing,
-                                           endPoint: .leading)
-                        )
-                        .clipShape(Circle())
-                        .shadow(color: .gray.opacity(0.5), radius: 7, y: 5)
-                        .padding(.trailing, 40)
                     }
                 }
                 .onReceive(keyboardIsOnPublisher) { isKeyboardOn in
