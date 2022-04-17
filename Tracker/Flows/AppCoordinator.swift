@@ -10,6 +10,8 @@ import Foundation
 class AppCoordinator: BaseCoordinator {
     
     override func start() {
+        NotificationManager.shared.requestAuthorization()
+        
         if UserDefaults.standard.bool(forKey: "isLogin" ) {
             toMain()
         } else {
