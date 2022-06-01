@@ -17,6 +17,8 @@
 		7A4799C927EE2329001E4DB4 /* Coordinate+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4799C527EE2329001E4DB4 /* Coordinate+CoreDataProperties.swift */; };
 		7A4799CE27EF5C56001E4DB4 /* DataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4799CD27EF5C56001E4DB4 /* DataRepository.swift */; };
 		7A4B6F6927E3D07100D8C2CD /* GoogleMapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4B6F6827E3D07100D8C2CD /* GoogleMapService.swift */; };
+		7A53A5C02847FA6F002834A4 /* SelfieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A53A5BF2847FA6F002834A4 /* SelfieViewController.swift */; };
+		7A53A5C22847FF97002834A4 /* SelfieDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A53A5C12847FF97002834A4 /* SelfieDelegate.swift */; };
 		7A82AACA27E9FEDE0015FCFF /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A82AAC927E9FEDE0015FCFF /* RoundButton.swift */; };
 		7A9B603E2808AEF30079014B /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9B603D2808AEF20079014B /* NotificationManager.swift */; };
 		7AA3F90627DE7367001E39BC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA3F90527DE7367001E39BC /* AppDelegate.swift */; };
@@ -56,6 +58,8 @@
 		7A4799C527EE2329001E4DB4 /* Coordinate+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coordinate+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7A4799CD27EF5C56001E4DB4 /* DataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRepository.swift; sourceTree = "<group>"; };
 		7A4B6F6827E3D07100D8C2CD /* GoogleMapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapService.swift; sourceTree = "<group>"; };
+		7A53A5BF2847FA6F002834A4 /* SelfieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfieViewController.swift; sourceTree = "<group>"; };
+		7A53A5C12847FF97002834A4 /* SelfieDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfieDelegate.swift; sourceTree = "<group>"; };
 		7A82AAC927E9FEDE0015FCFF /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
 		7A9B603D2808AEF20079014B /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		7AA3F90227DE7367001E39BC /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,6 +154,15 @@
 				7AEAE80427E7C89B0042491B /* AppleMapService.swift */,
 			);
 			path = Maps;
+			sourceTree = "<group>";
+		};
+		7A53A5BE2847FA58002834A4 /* Selfie */ = {
+			isa = PBXGroup;
+			children = (
+				7A53A5C12847FF97002834A4 /* SelfieDelegate.swift */,
+				7A53A5BF2847FA6F002834A4 /* SelfieViewController.swift */,
+			);
+			path = Selfie;
 			sourceTree = "<group>";
 		};
 		7A82AAC827E9FED10015FCFF /* Views */ = {
@@ -266,6 +279,7 @@
 				7AD5BBBD27F4FEC600F752E9 /* Main */,
 				7AD5BBBB27F4FD1200F752E9 /* Map */,
 				7AD5BBBA27F4FD0D00F752E9 /* Auth */,
+				7A53A5BE2847FA58002834A4 /* Selfie */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -444,6 +458,7 @@
 				7AD5BBE727F8A32300F752E9 /* User+CoreDataClass.swift in Sources */,
 				7A4799C627EE2329001E4DB4 /* Route+CoreDataClass.swift in Sources */,
 				7A82AACA27E9FEDE0015FCFF /* RoundButton.swift in Sources */,
+				7A53A5C02847FA6F002834A4 /* SelfieViewController.swift in Sources */,
 				7AEAD0EA27FC851B001A2BB4 /* MainViewModel.swift in Sources */,
 				7AD5BBCD27F5F7A700F752E9 /* BaseCoordinator.swift in Sources */,
 				7A05657527EE1F0A0076BD9A /* Tracker.xcdatamodeld in Sources */,
@@ -452,6 +467,7 @@
 				7AD5BBD627F5FA7100F752E9 /* AuthCoordinator.swift in Sources */,
 				7AEAE80327E7BBAB0042491B /* MapType.swift in Sources */,
 				7A4799C927EE2329001E4DB4 /* Coordinate+CoreDataProperties.swift in Sources */,
+				7A53A5C22847FF97002834A4 /* SelfieDelegate.swift in Sources */,
 				7A4799C727EE2329001E4DB4 /* Route+CoreDataProperties.swift in Sources */,
 				7A05657227EE1E5A0076BD9A /* CoreDataStack.swift in Sources */,
 				7A9B603E2808AEF30079014B /* NotificationManager.swift in Sources */,
