@@ -34,6 +34,10 @@ class MainCoordinator: BaseCoordinator {
             self?.takeSelfie()
         }
         
+        mainView.showSelfie = { [weak self] in
+            self?.showSelfie()
+        }
+        
         let controller = UIHostingController(rootView: mainView)
         
         let rootController = UINavigationController(rootViewController: controller)
@@ -55,7 +59,7 @@ class MainCoordinator: BaseCoordinator {
             selfieVC.image = image
             self?.rootController?.pushViewController(selfieVC, animated: true)
             
-//            let temp = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            FileManager.default.saveSelfie(image: image)
         }
         
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
@@ -67,4 +71,13 @@ class MainCoordinator: BaseCoordinator {
         
         rootController?.present(imagePickerController, animated: true)
     }
+    
+    private func showSelfie() {
+        if let image = FileManager.default.getSelfie() {
+            let selfieVC = SelfieViewController()
+            selfieVC.image = image
+            rootController?.pushViewController(selfieVC, animated: true)
+        }
+    }
+    
 }

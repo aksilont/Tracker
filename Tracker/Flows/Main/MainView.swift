@@ -14,11 +14,16 @@ struct MainView: View {
     var onMap: ((MapType) -> ())?
     var onLogout: (() -> ())?
     var takeSelfie: (() -> ())?
+    var showSelfie: (() -> ())?
     
     var body: some View {
         VStack {
             Button("Сделать селфи") {
                 takeSelfie?()
+            }.padding()
+            
+            Button("Посмотреть селфи") {
+                showSelfie?()
             }.padding()
             
             Button("Перейти к карте Google") {
