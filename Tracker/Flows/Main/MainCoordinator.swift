@@ -13,6 +13,8 @@ class MainCoordinator: BaseCoordinator {
     var rootController: UINavigationController?
     var onFinishFlow: (() -> Void)?
     
+    private let selfieDelegate = SelfieDelegate()
+    
     override func start() {
         showMainModule()
     }
@@ -26,6 +28,14 @@ class MainCoordinator: BaseCoordinator {
         
         mainView.onLogout = { [weak self] in
             self?.onFinishFlow?()
+        }
+        
+        mainView.takeSelfie = { [weak self] in
+            self?.takeSelfie()
+        }
+        
+        mainView.showSelfie = { [weak self] in
+            self?.showSelfie()
         }
         
         let controller = UIHostingController(rootView: mainView)
@@ -42,4 +52,32 @@ class MainCoordinator: BaseCoordinator {
         controller.navigationItem.hidesBackButton = true
         rootController?.pushViewController(controller, animated: true)
     }
+    
+    private func takeSelfie() {
+        selfieDelegate.onTakePicture = { [weak self] image in
+            let selfieVC = SelfieViewController()
+            selfieVC.image = image
+            self?.rootController?.pushViewController(selfieVC, animated: true)
+            
+            FileManager.default.saveSelfie(image: image)
+        }
+        
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
+        
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .camera
+        imagePickerController.allowsEditing = true
+        imagePickerController.delegate = selfieDelegate
+        
+        rootController?.present(imagePickerController, animated: true)
+    }
+    
+    private func showSelfie() {
+        if let image = FileManager.default.getSelfie() {
+            let selfieVC = SelfieViewController()
+            selfieVC.image = image
+            rootController?.pushViewController(selfieVC, animated: true)
+        }
+    }
+    
 }

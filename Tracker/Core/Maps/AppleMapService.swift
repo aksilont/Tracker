@@ -124,8 +124,10 @@ class AppleMapService: NSObject, MapServiceProtocol {
             removeAllOverlays()
             
             let routePolyLine = MKPolyline(coordinates: route, count: route.count)
-            mapView.addOverlay(routePolyLine)            
+            mapView.addOverlay(routePolyLine)
         }
+        
+        addMarkerkToCurrentLocatin()
     }
     
     // MARK: - Annotation
@@ -220,9 +222,17 @@ extension AppleMapService: MKMapViewDelegate {
         guard annotation is MKPointAnnotation else { return nil }
         
         let customAnnotationView = MKAnnotationView()
-        let smileLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 25, height: 20))
-        smileLabel.text = "🙂"
-        customAnnotationView.addSubview(smileLabel)
+        
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        imageView.layer.cornerRadius = imageView.frame.width / 2
+        imageView.layer.masksToBounds = true
+        if let image = FileManager.default.getSelfie() {
+            imageView.image = image
+        }
+        
+        customAnnotationView.addSubview(imageView)
         return customAnnotationView
     }
     
